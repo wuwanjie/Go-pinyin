@@ -89,12 +89,12 @@ func normalStr(str string) string {
 //获取文件所在的根目录
 func getDictPath() string {
 	currentPath, _ := os.Getwd()
-	return currentPath + "/src/github.com/struCoder/Go-pinyin/dict/"
+	return currentPath + "/src/github.com/wuwanjie/Go-pinyin/dict/"
 }
 
 func initPhrases() {
 	currentPath, _ := os.Getwd()
-	f, err := os.Open(currentPath + "/src/github.com/struCoder/Go-pinyin/phrases-dict")
+	f, err := os.Open(currentPath + "/src/github.com/wuwanjie/Go-pinyin/phrases-dict")
 	defer f.Close()
 	if err != nil {
 		log.Fatal(err)
