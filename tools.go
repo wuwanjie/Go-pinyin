@@ -1,10 +1,11 @@
 package pinyingo
 
 import (
+	"bufio"
 	"encoding/json"
-	//"fmt"
+	"fmt"
 	"github.com/yanyiwu/gojieba"
-	//"golang/util"
+	"golang/util"
 	"log"
 	"os"
 	"regexp"
@@ -68,6 +69,26 @@ func init() {
 	initPhrases()
 }
 
+func GeneDict() {
+	fHandle, err := os.OpenFile("/home/wuwanjie/heici.txt", os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModePerm|os.ModeTemporary)
+	defer fHandle.Close()
+	if err != nil {
+		util.LogInfo(fmt.Sprintf("%v", err))
+		return
+	}
+	bufW := bufio.NewWriter(fHandle)
+
+	for k, v := range dict {
+		if len(v) == 0 {
+			continue
+		}
+		str := normalStr(v)
+		fmt.Printf("%s %s\n", v, str)
+		bufW.WriteString(fmt.Sprintf("dict[\"%x\"]  = \"%s\"\n", k, str))
+		bufW.Flush()
+	}
+}
+
 func getMapKeys() string {
 	keyString := ""
 	for key, _ := range sympolMap {
@@ -77,13 +98,24 @@ func getMapKeys() string {
 }
 
 func normalStr(str string) string {
+	tmp := reg.ReplaceAllStringFunc(str, replaceFunc)
+	return tmp
 	findRet := reg.FindString(str)
+	fmt.Printf("%s %s\n", findRet, str)
 	_, ok := sympolMap[findRet]
 	// 有些拼音没有音标数据
 	if !ok {
 		return str
 	}
 	return strings.Replace(str, findRet, string([]byte(sympolMap[findRet])[0]), -1)
+}
+
+func replaceFunc(str string) string {
+	_, ok := sympolMap[str]
+	if !ok {
+		return str
+	}
+	return string([]byte(sympolMap[str])[0])
 }
 
 //获取文件所在的根目录

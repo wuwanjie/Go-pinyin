@@ -91,27 +91,25 @@ func (this *Options) Convert(strs string) []string {
 	return retArr
 }
 
-func (this *Options) GetCovertDict(strs string) ([]string, map[string]string) {
+func (this *Options) GetCovertDict(strs string) ([]rune, map[rune]string) {
 	length := len(strs)
-	dictHan2Pin := make(map[string]string, length)
+	dictHan2Pin := make(map[rune]string, length)
 
 	//获取字符串的长度
 	bytes := []byte(strs)
-	bolcks := make([]string, 0)
+	blocks := make([]rune, 0)
 	var single string
-	var tmp string
+	//var tmp string
 	for len(bytes) > 0 {
 		r, w := utf8.DecodeRune(bytes)
 		bytes = bytes[w:]
 		//util.LogInfo(fmt.Sprintf("[pinyin] %v", int(r)))
 		single = get(int(r))
-		tmp = string(r)
 		// 汉字
 		if len(single) != 0 {
-			tmp = this.perStr(single)
-			dictHan2Pin[string(r)] = tmp
+			dictHan2Pin[r] = this.perStr(single)
 		}
-		blocks = append(blocks, string(r))
+		blocks = append(blocks, r)
 	}
 	return blocks, dictHan2Pin
 
