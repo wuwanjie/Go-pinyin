@@ -121,7 +121,7 @@ func replaceFunc(str string) string {
 //获取文件所在的根目录
 func getDictPath() string {
 	//currentPath, _ := os.Getwd()
-	return "/home/q/data/itachi"
+	return "/home/q/data/itachi/"
 }
 
 func initPhrases() {
