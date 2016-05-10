@@ -120,13 +120,13 @@ func replaceFunc(str string) string {
 
 //获取文件所在的根目录
 func getDictPath() string {
-	currentPath, _ := os.Getwd()
-	return currentPath + "/src/github.com/wuwanjie/Go-pinyin/dict/"
+	//currentPath, _ := os.Getwd()
+	return "/home/q/data/itachi"
 }
 
 func initPhrases() {
-	currentPath, _ := os.Getwd()
-	f, err := os.Open(currentPath + "/src/github.com/wuwanjie/Go-pinyin/phrases-dict")
+	//currentPath, _ := os.Getwd()
+	f, err := os.Open("/home/q/data/itachi/phrases-dict")
 	defer f.Close()
 	if err != nil {
 		log.Fatal(err)
