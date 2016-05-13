@@ -3,9 +3,8 @@ package pinyingo
 import (
 	"bufio"
 	"encoding/json"
-	"fmt"
 	"github.com/yanyiwu/gojieba"
-	"golang/util"
+	"io"
 	"log"
 	"os"
 	"regexp"
@@ -65,29 +64,29 @@ func init() {
 	//初始化时将gojieba实例化到内存
 	jieba = gojieba.NewJieba(dictPath+"jieba.dict.utf8", dictPath+"hmm_model.utf8", dictPath+"user.dict.utf8")
 
-	//初始化多音字到内存
+	// 初始化常用词
 	initPhrases()
 }
 
-func GeneDict() {
-	fHandle, err := os.OpenFile("/home/wuwanjie/heici.txt", os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModePerm|os.ModeTemporary)
-	defer fHandle.Close()
-	if err != nil {
-		util.LogInfo(fmt.Sprintf("%v", err))
-		return
-	}
-	bufW := bufio.NewWriter(fHandle)
-
-	for k, v := range dict {
-		if len(v) == 0 {
-			continue
-		}
-		str := normalStr(v)
-		fmt.Printf("%s %s\n", v, str)
-		bufW.WriteString(fmt.Sprintf("dict[\"%x\"]  = \"%s\"\n", k, str))
-		bufW.Flush()
-	}
-}
+//func GeneDict() {
+//	fHandle, err := os.OpenFile("/home/wuwanjie/heici.txt", os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModePerm|os.ModeTemporary)
+//	defer fHandle.Close()
+//	if err != nil {
+//		util.LogInfo(fmt.Sprintf("%v", err))
+//		return
+//	}
+//	bufW := bufio.NewWriter(fHandle)
+//
+//	for k, v := range dict {
+//		if len(v) == 0 {
+//			continue
+//		}
+//		str := normalStr(v)
+//		fmt.Printf("%s %s\n", v, str)
+//		bufW.WriteString(fmt.Sprintf("dict[0x%x]  = \"%s\"\n", k, str))
+//		bufW.Flush()
+//	}
+//}
 
 func getMapKeys() string {
 	keyString := ""
@@ -100,14 +99,6 @@ func getMapKeys() string {
 func normalStr(str string) string {
 	tmp := reg.ReplaceAllStringFunc(str, replaceFunc)
 	return tmp
-	findRet := reg.FindString(str)
-	fmt.Printf("%s %s\n", findRet, str)
-	_, ok := sympolMap[findRet]
-	// 有些拼音没有音标数据
-	if !ok {
-		return str
-	}
-	return strings.Replace(str, findRet, string([]byte(sympolMap[findRet])[0]), -1)
 }
 
 func replaceFunc(str string) string {
@@ -134,5 +125,26 @@ func initPhrases() {
 	decoder := json.NewDecoder(f)
 	if err := decoder.Decode(&phrasesDict); err != nil {
 		log.Fatal(err)
+	}
+}
+
+func loadPhrases() {
+	f, err := os.Open("/home/q/data/itachi/idf.utf8")
+	defer f.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+	bufRead := bufio.NewReader(f)
+	for {
+		line, err := bufRead.ReadString('\n')
+		if err != nil || io.EOF == err {
+			break
+		}
+		line = strings.Trim(line, "\r\n")
+		fields := strings.Split(strings.Trim(line, " "), " ")
+		if len(fields[0]) <= 0 {
+			continue
+		}
+		phrasesDict[fields[0]] = "1"
 	}
 }

@@ -31,7 +31,7 @@ func (this *Options) perStr(pinyinStrs string) string {
 	case STYLE_NORMAL:
 		ret := strings.Split(pinyinStrs, ",")
 		//util.LogInfo(fmt.Sprintf("[STYLE_NORMAL] %#v", ret))
-		return normalStr(ret[0])
+		return ret[0]
 	}
 	return ""
 }
@@ -129,7 +129,7 @@ func (this *Options) doConvertAndGeneDict(strs string) ([]string, map[string]str
 		r, w := utf8.DecodeRune(bytes)
 		bytes = bytes[w:]
 		//util.LogInfo(fmt.Sprintf("[pinyin] %v", int(r)))
-		single = get(int(r))
+		single = getnew(int(r))
 		tmp = string(r)
 		// 汉字
 		if len(single) != 0 {
@@ -146,6 +146,14 @@ func (this *Options) doConvertAndGeneDict(strs string) ([]string, map[string]str
 
 func (this *Options) ConvertAndGeneDict(strs string) ([]string, map[string]string, map[string]string) {
 	return this.doConvertAndGeneDict(strs)
+}
+
+func (this *Options) Isphrases(str string) bool {
+	_, ok := phrasesDict[str]
+	if ok {
+		return true
+	}
+	return false
 }
 
 func NewPy(style int, segment bool) *Options {
