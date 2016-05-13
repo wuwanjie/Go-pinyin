@@ -148,8 +148,16 @@ func (this *Options) ConvertAndGeneDict(strs string) ([]string, map[string]strin
 	return this.doConvertAndGeneDict(strs)
 }
 
-func (this *Options) Isphrases(str string) bool {
+func Isphrases(str string) bool {
 	_, ok := phrasesDict[str]
+	if ok {
+		return true
+	}
+	return false
+}
+
+func IsCommonWord(str string) bool {
+	_, ok := commonWord[str]
 	if ok {
 		return true
 	}

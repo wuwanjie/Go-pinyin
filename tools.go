@@ -3,12 +3,14 @@ package pinyingo
 import (
 	"bufio"
 	"encoding/json"
+	//"fmt"
 	"github.com/yanyiwu/gojieba"
 	"io"
 	"log"
 	"os"
 	"regexp"
 	"strings"
+	"unicode/utf8"
 )
 
 const (
@@ -22,6 +24,7 @@ const (
 )
 
 var phrasesDict map[string]string
+var commonWord map[string]bool
 var reg *regexp.Regexp
 var INITIALS []string = strings.Split("b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,zh,ch,sh,z,c,s", ",")
 var keyString string
@@ -66,6 +69,11 @@ func init() {
 
 	// 初始化常用词
 	initPhrases()
+	loadPhrases()
+
+	// 加载常用字
+	commonWord = make(map[string]bool, 10000)
+	loadCommonWord()
 }
 
 //func GeneDict() {
@@ -146,5 +154,26 @@ func loadPhrases() {
 			continue
 		}
 		phrasesDict[fields[0]] = "1"
+	}
+}
+
+func loadCommonWord() {
+	f, err := os.Open("/home/q/data/itachi/common.utf8")
+	defer f.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+	bufRead := bufio.NewReader(f)
+	for {
+		line, err := bufRead.ReadString('\n')
+		if err != nil || io.EOF == err {
+			break
+		}
+		line = strings.Trim(line, "\r\n")
+		for len(line) > 0 {
+			r, size := utf8.DecodeRuneInString(line)
+			commonWord[string(r)] = true
+			line = line[size:]
+		}
 	}
 }
