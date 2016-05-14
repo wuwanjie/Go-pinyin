@@ -46,7 +46,7 @@ func (this *Options) doConvert(strs string) []string {
 	for len(bytes) > 0 {
 		r, w := utf8.DecodeRune(bytes)
 		bytes = bytes[w:]
-		single = get(int(r))
+		single = getnew(int(r))
 		// 中文字符判断
 		tempStr = string(r)
 		if len(single) == 0 {
@@ -104,7 +104,7 @@ func (this *Options) GetCovertDict(strs string) ([]rune, map[rune]string) {
 		r, w := utf8.DecodeRune(bytes)
 		bytes = bytes[w:]
 		//util.LogInfo(fmt.Sprintf("[pinyin] %v", int(r)))
-		single = get(int(r))
+		single = getnew(int(r))
 		// 汉字
 		if len(single) != 0 {
 			dictHan2Pin[r] = this.perStr(single)
