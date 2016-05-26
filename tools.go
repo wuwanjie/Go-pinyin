@@ -143,6 +143,8 @@ func loadPhrases() {
 		log.Fatal(err)
 	}
 	bufRead := bufio.NewReader(f)
+	var shuziReg *regexp.Regexp
+	shuziReg = regexp.MustCompile("^[一|二|三|四|五|六|七|八|九]*$")
 	for {
 		line, err := bufRead.ReadString('\n')
 		if err != nil || io.EOF == err {
@@ -151,6 +153,9 @@ func loadPhrases() {
 		line = strings.Trim(line, "\r\n")
 		fields := strings.Split(strings.Trim(line, " "), " ")
 		if len(fields[0]) <= 0 {
+			continue
+		}
+		if shuziReg.MatchString(fields[0]) {
 			continue
 		}
 		phrasesDict[fields[0]] = "1"
