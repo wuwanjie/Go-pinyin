@@ -125,7 +125,7 @@ func getDictPath() string {
 
 func initPhrases() {
 	//currentPath, _ := os.Getwd()
-	f, err := os.Open(getDictPath() . "phrases-dict")
+	f, err := os.Open(getDictPath() + "phrases-dict")
 	defer f.Close()
 	if err != nil {
 		log.Fatal(err)
@@ -137,7 +137,7 @@ func initPhrases() {
 }
 
 func loadPhrases() {
-	f, err := os.Open(getDictPath() . "idf.utf8")
+	f, err := os.Open(getDictPath() + "idf.utf8")
 	defer f.Close()
 	if err != nil {
 		log.Fatal(err)
@@ -163,7 +163,7 @@ func loadPhrases() {
 }
 
 func loadCommonWord() {
-	f, err := os.Open(getDictPath() . "common.utf8")
+	f, err := os.Open(getDictPath() + "common.utf8")
 	defer f.Close()
 	if err != nil {
 		log.Fatal(err)
