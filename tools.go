@@ -120,12 +120,12 @@ func replaceFunc(str string) string {
 //获取文件所在的根目录
 func getDictPath() string {
 	//currentPath, _ := os.Getwd()
-	return "/home/q/data/itachi/"
+	return "/home/q/data/itachi/common/"
 }
 
 func initPhrases() {
 	//currentPath, _ := os.Getwd()
-	f, err := os.Open("/home/q/data/itachi/phrases-dict")
+	f, err := os.Open(getDictPath() . "phrases-dict")
 	defer f.Close()
 	if err != nil {
 		log.Fatal(err)
@@ -137,7 +137,7 @@ func initPhrases() {
 }
 
 func loadPhrases() {
-	f, err := os.Open("/home/q/data/itachi/idf.utf8")
+	f, err := os.Open(getDictPath() . "idf.utf8")
 	defer f.Close()
 	if err != nil {
 		log.Fatal(err)
@@ -163,7 +163,7 @@ func loadPhrases() {
 }
 
 func loadCommonWord() {
-	f, err := os.Open("/home/q/data/itachi/common.utf8")
+	f, err := os.Open(getDictPath() . "common.utf8")
 	defer f.Close()
 	if err != nil {
 		log.Fatal(err)

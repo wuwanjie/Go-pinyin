@@ -103,7 +103,7 @@ func (this *Options) GetCovertDict(strs string) ([]rune, map[rune]string) {
 	for len(bytes) > 0 {
 		r, w := utf8.DecodeRune(bytes)
 		bytes = bytes[w:]
-		//util.LogInfo(fmt.Sprintf("[pinyin] %v", int(r)))
+		//util.LogInfo(fmt.Sprintf("[pinyin] %v", r))
 		single = getnew(int(r))
 		// 汉字
 		if len(single) != 0 {

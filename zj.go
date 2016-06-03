@@ -8,7 +8,7 @@ import (
 var dictnew = make([]string, 200000)
 
 func getnew(index int) string {
-	//util.LogInfo(fmt.Sprintf("[get start] %v", index))
+	//util.LogInfo(fmt.Sprintf("[get start] %x", index))
 	ret := dictnew[index]
 	//util.LogInfo(fmt.Sprintf("[get end] %v", ret))
 	return ret
@@ -2643,7 +2643,7 @@ func init() {
 	dictnew[0x414c] = "juan"
 	dictnew[0x414d] = "dong,ting"
 	dictnew[0x414e] = "you"
-	dictnew[0x414f] = "hui,wei"
+	dictnew[0x414f] = "wei"
 	dictnew[0x4150] = "jian,qian"
 	dictnew[0x4151] = "rui,sui"
 	dictnew[0x4152] = "mang"
@@ -2778,7 +2778,7 @@ func init() {
 	dictnew[0x41f8] = "cheng,sheng,zeng"
 	dictnew[0x41f9] = "jun"
 	dictnew[0x41fa] = "chou,dou"
-	dictnew[0x41fb] = "hui,kui,wei"
+	dictnew[0x41fb] = "wei,hui,kui"
 	dictnew[0x41fc] = "chi,yi"
 	dictnew[0x41fd] = "zhi"
 	dictnew[0x41fe] = "yan"
@@ -3095,7 +3095,7 @@ func init() {
 	dictnew[0x4373] = "chuo,jue,que"
 	dictnew[0x4374] = "duo,rui,wei,wei"
 	dictnew[0x4376] = "dong"
-	dictnew[0x4377] = "gui,hui,wei"
+	dictnew[0x4377] = "wei,gui,hui"
 	dictnew[0x4378] = "bo"
 	dictnew[0x437a] = "huan"
 	dictnew[0x437b] = "xuan"
@@ -4525,7 +4525,7 @@ func init() {
 	dictnew[0x4a44] = "tian"
 	dictnew[0x4a45] = "zhan"
 	dictnew[0x4a46] = "jian,zhan"
-	dictnew[0x4a48] = "hui,wei,xue"
+	dictnew[0x4a48] = "wei,hui,xue"
 	dictnew[0x4a49] = "fu"
 	dictnew[0x4a4a] = "wan,wo"
 	dictnew[0x4a4b] = "mo"
@@ -4545,7 +4545,7 @@ func init() {
 	dictnew[0x4a5b] = "bi"
 	dictnew[0x4a5c] = "zhou"
 	dictnew[0x4a5d] = "pao"
-	dictnew[0x4a5e] = "nian,tian,tie,wei"
+	dictnew[0x4a5e] = "wei,nian,tian,tie"
 	dictnew[0x4a5f] = "yi,ti"
 	dictnew[0x4a61] = "jia"
 	dictnew[0x4a62] = "da,zhi"
