@@ -65,7 +65,7 @@ func init() {
 	dictPath := getDictPath()
 
 	//初始化时将gojieba实例化到内存
-	jieba = gojieba.NewJieba(dictPath+"jieba.dict.utf8", dictPath+"hmm_model.utf8", dictPath+"user.dict.utf8", dictPath+"idf.utf8", dict+"stop_words.utf8")
+	jieba = gojieba.NewJieba(dictPath+"jieba.dict.utf8", dictPath+"hmm_model.utf8", dictPath+"user.dict.utf8", dictPath+"idf.utf8", dictPath+"stop_words.utf8")
 
 	// 初始化常用词
 	initPhrases()
